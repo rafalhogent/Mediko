@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MedikoWeb</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="false" />
+    @*<link rel="stylesheet" href="~/MedikoWeb.styles.css" asp-append-version="true" />*@
+</head>
+
+<body>
+
+    <!--    header org
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm
+                    navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MedikoWeb</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User" 
+                                asp-action="Index">Index</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" 
+                                asp-action="Privacy">Privacy</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User"   
+                                asp-action="Login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User" 
+                                asp-action="Register">Register</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    -->
+
+
+    <!-- new header -->
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bgmed">
+            <div class="container-fluid">
+
+                <a class="navbar-brand ms-4" asp-action="Index" asp-controller="Home">
+                    <svg class="bi logo" fill="currentColor">
+                        <use xlink:href="../icons/bootstrap-icons.svg#heart-pulse-fill"></use>
+                    </svg>
+                    <span>Mediko</span>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarCollapse" 
+                        aria-controls="navbarCollapse" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse ms-4" id="navbarCollapse">
+                    <ul class="navbar-nav me-auto mb-2 mb-md-0">@await Component.InvokeAsync("NavbarDataMenu")</ul>
+                    <ul class="navbar-nav ms-auto mb-2 mb-md-0">@await Component.InvokeAsync("NavbarUserMenu")</ul>
+                </div>
+
+            </div>
+        </nav>
+    </header>
+
+
+
+
+    <div class="container">
+        <main role="main" class="pb-3 my-4">
+            @RenderBody()
+        </main>
+    </div>
+
+
+
+    <!--
+    <footer class="border-top footer text-muted py-2 mt-5 ">
+            <div class="container">
+                &copy; 2022 - Mediko Beta 0.21 - Rafal Kowalski <a asp-area="" asp-controller="Home" 
+                asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
+      -->
+
+      <!-- Footer new -->
+    <footer class="footer d-flex flex-wrap justify-content-between align-items-center py-2 mt-4 mb-2 border-top">
+        <div class="ms-4 col-sm-4 d-flex align-items-center">
+            <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                @*<svg class="bi" width="30" height="24"><use xlink:href="#bootstrap" /></svg>*@
+            </a>
+            <span class=" mb-3 mb-sm-0 text-muted">&copy; 2022 - Mediko Beta 0.21 - Rafal Kowalski  </span>
+        </div>
+
+        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex me-4">
+            <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24">
+                <use xlink:href="/icons/bootstrap-icons.svg#twitter" /></svg></a></li>
+            <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24">
+                <use xlink:href="/icons/bootstrap-icons.svg#github" /></svg></a></li>
+            <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24">
+                <use xlink:href="/icons/bootstrap-icons.svg#youtube" /></svg></a></li>
+
+        </ul>
+    </footer>
+    
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+
+
+</html>
