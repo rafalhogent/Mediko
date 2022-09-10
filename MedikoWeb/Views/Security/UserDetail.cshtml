@@ -1,0 +1,32 @@
+﻿@model UserDetailViewModel
+@{
+    ViewData["Title"] = "Mediko - " + Model.UserName ;
+}
+<h2 class="m-3"><i>@Model.UserName</i></h2>
+<h5 class="m-3"><i>@Model.UserId</i></h5>
+
+@{
+    if (Model.RoleSelections.Count != 0)
+    {
+        <div>
+            <div class="bd-example-snippet bd-code-snippet">
+                <div class="container m-5">
+                    <form asp-action="UserRolesUpdate" method="post">
+                        <h5>Roles</h5>
+                        @Html.HiddenFor(m=>m.UserName)
+                        @Html.HiddenFor(m=>m.UserId)
+                        @Html.EditorFor(a=>a.RoleSelections)
+                        <div class="mt-5">
+                            <button type="submit" class="btn btn-primary">Update Roles</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>        
+
+    }
+}
+
+
+<a asp-action="Index"
+   class="btn btn-primary mt-4">Terug</a>

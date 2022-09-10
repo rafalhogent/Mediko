@@ -1,0 +1,9 @@
+﻿@model RoleSelection
+
+<div class="container my-3">
+
+    @Html.CheckBoxFor(a=>a.IsSelected, new {@class = "form-check-input me-2"})
+    @Html.HiddenFor(a=>a.RoleName)
+    @Model.RoleName
+
+</div>

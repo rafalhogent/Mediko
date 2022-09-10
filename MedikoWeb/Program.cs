@@ -19,8 +19,10 @@ builder.Services.AddTransient<ILogBookRepo, SQLLogBookRepo>();
 builder.Services.AddIdentity<AppUser, IdentityRole>(config =>
 {
     config.SignIn.RequireConfirmedEmail = false;
-}).AddEntityFrameworkStores<MedikoDbContext>()
-              .AddDefaultTokenProviders();
+})
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<MedikoDbContext>()
+    .AddDefaultTokenProviders();
 
 builder.Services.AddSession();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

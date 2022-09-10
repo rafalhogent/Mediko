@@ -25,6 +25,8 @@ namespace MedikoWeb.Controllers
 
 
 
+
+
         public IActionResult Index()
         {
 

@@ -1,0 +1,36 @@
+﻿@model IQueryable<IdentityUser>
+@{
+    ViewData["Title"] = "Mediko - Security Manager";
+}
+<h2>Security Manager</h2>
+<table class="table table-striped ">
+
+    <thead>
+        <tr>
+            
+            <th>Username</th>
+            <th>ID</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var appuser in Model)
+        {
+            <tr>
+                
+                <td>
+                    <a asp-action="UserDetail" asp-route-id="@appuser.Id">
+                        @appuser.UserName
+                    </a>
+                </td>
+                <td>@appuser.Id</td>
+                <td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+
