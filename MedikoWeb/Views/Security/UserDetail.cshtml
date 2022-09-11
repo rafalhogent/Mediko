@@ -27,6 +27,51 @@
     }
 }
 
+@{
+    if (Model.UserName == User.Identity.Name)
+    {
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#removeConfirm">
+            Je eigen aacount verwijderen
+        </button>
+    }
+    else
+    {
+        <div>
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#removeConfirm">
+                Gebruiker verwijderen
+            </button>
 
-<a asp-action="Index"
-   class="btn btn-primary mt-4">Terug</a>
+        </div>
+    }
+}
+
+<div>
+    <a asp-action="Index"
+       class="btn btn-primary mt-4">Terug naar overzicht</a>
+</div>
+
+
+
+
+<div class="modal fade" id="removeConfirm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="removeConfirmLabel">Gebruiker verwijderen</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Ben je zeker dat je @Model.UserName wil verwijderen?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuleren</button>
+                <form asp-action="RemoveUser"
+                      asp-route-id="@Model.UserId" method="post">
+                    <input type="submit" value="Zeker verwijderen" class="btn btn-danger" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
