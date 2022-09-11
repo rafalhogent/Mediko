@@ -32,6 +32,14 @@ namespace MedikoData.Repos
             }
         }
 
+        public async Task<IEnumerable<LogBook>> GetChoosenLogbooks(string id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user != null)
+            return await _context.LogBooks.Where(x => x.UsersWhoChoosen.Contains(user)).ToListAsync();
+            return Enumerable.Empty<LogBook>();
+        }
+
         public async Task<LogBook?> GetLogBookById(int? id)
         {
             if (id == null || _context.LogBooks == null)
@@ -51,10 +59,38 @@ namespace MedikoData.Repos
                 .Where(x => x.Creator == null || x.Creator.Id == userId).ToListAsync();
         }
 
+        public async Task AddChoosenLogbookForUser(string userId, int logbookId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            var logbook = await _context.LogBooks.FindAsync(logbookId);
+
+
+
+            if (user != null && logbook != null) logbook.UsersWhoChoosen.Add(user);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task Update(LogBook logBook)
         {
             _context.Update(logBook);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task RemoveFromChoosenLogbooksForUser(string userId, int logbookId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+
+            var logbook = await _context.LogBooks.FindAsync(logbookId);
+
+            if (user != null && logbook != null && logbook.UsersWhoChoosen.Contains(user))
+            {
+                logbook.UsersWhoChoosen.Remove(user);
+                await _context.SaveChangesAsync();
+
+            }
+                
+                
+
         }
     }
 }

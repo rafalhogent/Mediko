@@ -3,24 +3,27 @@ using MedikoData;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MedikoWeb.Models;
+using MedikoServices;
+using System.Linq;
 
 namespace MedikoWeb.Controllers
 {
-    [Route("")]
+    [Route("Account")]
     public class UserController : Controller
     {
 
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signinManager;
-        private readonly MedikoDbContext _medikoDbContext;
+        private readonly LogBookService _logbookService;
 
         public UserController(UserManager<AppUser> userManager,
                     SignInManager<AppUser> signInManager,
-                    MedikoDbContext medikoDbContext)
+                    LogBookService logBookService
+            )
         {
             _userManager = userManager;
             _signinManager = signInManager;
-            _medikoDbContext = medikoDbContext;
+            _logbookService = logBookService;
         }
 
 
@@ -77,13 +80,6 @@ namespace MedikoWeb.Controllers
         }
 
 
-        //[Route("Logout")]
-        //public async Task<IActionResult> LogOut()
-        //{
-        //    await _signinManager.SignOutAsync();
-        //    return RedirectToAction(nameof(Index), nameof(HomeController));
-        //}
-
 
         [Route("Logout")]
         public async Task<IActionResult> LogOut()
@@ -118,7 +114,7 @@ namespace MedikoWeb.Controllers
                 if (result.Succeeded)
                 {
                     var nieuwUser = _userManager.FindByNameAsync(user.UserName).Result;
-                    
+
 
                     if (!_userManager.IsInRoleAsync(nieuwUser, "Patient").Result)
                     {
@@ -140,5 +136,70 @@ namespace MedikoWeb.Controllers
             }
             return View(userVM);
         }
+
+        [Route("Options")]
+        public async Task<IActionResult> Options()
+        {
+            if (User?.Identity?.IsAuthenticated != true)
+                return RedirectToAction(nameof(Login));
+
+            var user = await _userManager.GetUserAsync(User);
+
+            var logbooksForUser = await _logbookService.GetLogBooksForUser(user.Id);
+            var choosenLogbooks = await _logbookService.GetChoosenLogbooks(user.Id);
+
+            List<LogbookSelection> logbooksSelections = new List<LogbookSelection>();
+
+            foreach (var logbook in logbooksForUser)
+            {
+                logbooksSelections.Add(new LogbookSelection
+                {
+                    LogbookName = logbook.Name,
+                    LogbookId = logbook.LogBookId,
+                    IsSelected = choosenLogbooks.Contains(logbook)
+                }); ;
+            }
+
+            UserOptionsViewModel optionsVM = new UserOptionsViewModel
+            {
+                UserId = user.Id,
+                UserName = user.UserName,
+
+                LogbookSelections = logbooksSelections
+
+            };
+            return View(optionsVM);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateChoosenLogbooks(UserOptionsViewModel optionsVM)
+        {
+            var logbooksForUser = await _logbookService.GetLogBooksForUser(optionsVM.UserId);
+            var choosenLogbooks = await _logbookService.GetChoosenLogbooks(optionsVM.UserId);
+
+            foreach (var selection in optionsVM.LogbookSelections)
+            {
+                if (selection.IsSelected)
+                {
+                    if (!choosenLogbooks.Contains(_logbookService.GetLogBookById(selection.LogbookId).Result))
+                    {
+                        await _logbookService.AddChoosenLogbookForUser(optionsVM.UserId, selection.LogbookId);
+                    }
+
+                }
+                else
+                {
+                    if (choosenLogbooks.Contains(_logbookService.GetLogBookById(selection.LogbookId).Result))
+                    {
+                        await _logbookService.RemoveFromChoosenLogbooksForUser(optionsVM.UserId, selection.LogbookId);
+                    }
+                }
+            }
+
+            return RedirectToAction(nameof(Options));
+        }
+
+
+
     }
 }

@@ -23,6 +23,6 @@ namespace MedikoData.Entities
 
         
         public ICollection<Log> Logs { get; set; } = null!;
-        public ICollection<AppUser> UsersWhoChoosen { get; set; } = null!;
+        public ICollection<AppUser> UsersWhoChoosen { get; set; } = new List<AppUser>();
     }
 }

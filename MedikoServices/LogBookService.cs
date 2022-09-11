@@ -26,6 +26,11 @@ namespace MedikoServices
             await _logBookRepo.DeleteLogBook(id);
         }
 
+        public async Task<IEnumerable<LogBook>> GetChoosenLogbooks(string id)
+        {
+           return await _logBookRepo.GetChoosenLogbooks(id);
+        }
+
         public async Task<LogBook?> GetLogBookById(int? id)
         {
             return await _logBookRepo.GetLogBookById(id);
@@ -37,9 +42,19 @@ namespace MedikoServices
             
         }
 
+        public async Task AddChoosenLogbookForUser(string userId, int logbookId)
+        {
+            await _logBookRepo.AddChoosenLogbookForUser(userId, logbookId);
+        }
+
         public async Task Update(LogBook logBook)
         {
             await _logBookRepo.Update(logBook);
+        }
+
+        public async Task RemoveFromChoosenLogbooksForUser(string userId, int logbookId)
+        {
+            await _logBookRepo.RemoveFromChoosenLogbooksForUser(userId, logbookId);
         }
     }
 }

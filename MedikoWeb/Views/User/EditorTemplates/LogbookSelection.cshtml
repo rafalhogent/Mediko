@@ -1,0 +1,10 @@
+﻿@model LogbookSelection
+
+<div class="container my-3">
+
+    @Html.CheckBoxFor(a=>a.IsSelected, new {@class = "form-check-input me-2"})
+    @Html.HiddenFor(a=>a.LogbookName)
+    @Html.HiddenFor(a=>a.LogbookId)
+    @Model.LogbookName
+
+</div>

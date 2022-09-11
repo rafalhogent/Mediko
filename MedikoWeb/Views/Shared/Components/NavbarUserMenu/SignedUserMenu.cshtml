@@ -15,8 +15,8 @@
         <ul class="dropdown-menu">
             <li><a class="dropdown-item" asp-action="LogOut" asp-controller="User">Afmelden</a></li>
             <li> <hr class="dropdown-divider"> </li>
-            <li><a class="dropdown-item" href="#">Demo bekijken</a></li>
-            <li><a class="dropdown-item" href="#">Instellingen</a></li>
+            @*<li><a class="dropdown-item" href="#">Demo bekijken</a></li>*@
+            <li><a class="dropdown-item" asp-action="Options" asp-controller="User">Instellingen</a></li>
             <li><a class="dropdown-item" href="#">Kies Taal</a></li>
             @await Component.InvokeAsync("NavbarSecurityMenu")
         </ul>
