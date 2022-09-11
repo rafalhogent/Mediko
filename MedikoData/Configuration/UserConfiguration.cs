@@ -19,18 +19,12 @@ namespace MedikoData.Configurations
             //builder.Property(u => u.DateOfBirth).HasColumnType("datetime");
 
 
-            builder.HasMany(x => x.CustomLogTypes).WithOne(x=>x.Creator);
+            builder.HasMany(x => x.CustomLogbooks).WithOne(x => x.Creator);
             builder.HasMany(x => x.Logs).WithOne(x => x.Creator);
 
-            AppUser admin = new AppUser
-            {
-                UserName = "Admin",
-                PasswordHash = BCrypt.Net.BCrypt.HashPassword("Mediko2022#")
-            };
+            builder.HasMany(x => x.ChoosenLogbooks).WithMany(x => x.UsersWhoChoosen);
 
-            builder.HasData(admin);
-            
-            
+
         }
 
     }

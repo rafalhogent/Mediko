@@ -24,10 +24,12 @@ namespace MedikoData.Entities
 
         public Gender? Gender { get; set; }
         public DateTime? DateOfBirth { get; set; }
-        public Language Language { get; set; } = Language.EN;
+        public Language Language { get; set; } = Language.NL;
 
 
-        public ICollection<LogBook> CustomLogTypes { get; set; } = null!;
+        public ICollection<LogBook> CustomLogbooks { get; set; } = null!;
         public ICollection<Log> Logs { get; set; } = null!;
+
+        public ICollection<LogBook> ChoosenLogbooks { get; set; } = null!;
     }
 }

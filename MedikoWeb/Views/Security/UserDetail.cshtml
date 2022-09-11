@@ -28,7 +28,7 @@
 }
 
 @{
-    if (Model.UserName == User.Identity.Name)
+    if (User?.Identity?.Name != null &&  Model.UserName == User.Identity.Name)
     {
         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#removeConfirm">
             Je eigen aacount verwijderen

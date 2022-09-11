@@ -187,6 +187,30 @@ namespace MedikoData.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AppUserLogBook",
+                columns: table => new
+                {
+                    ChoosenLogbooksLogBookId = table.Column<int>(type: "int", nullable: false),
+                    UsersWhoChoosenId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppUserLogBook", x => new { x.ChoosenLogbooksLogBookId, x.UsersWhoChoosenId });
+                    table.ForeignKey(
+                        name: "FK_AppUserLogBook_AspNetUsers_UsersWhoChoosenId",
+                        column: x => x.UsersWhoChoosenId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AppUserLogBook_LogBooks_ChoosenLogbooksLogBookId",
+                        column: x => x.ChoosenLogbooksLogBookId,
+                        principalTable: "LogBooks",
+                        principalColumn: "LogBookId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Logs",
                 columns: table => new
                 {
@@ -222,24 +246,26 @@ namespace MedikoData.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "5695f4a9-2de6-4e2b-a9ca-969a052e0ca1", "a1263f8a-f596-476e-a4bc-f897dc7c8e7b", "Editor", "Editor" },
-                    { "683be810-c308-495e-b264-8fa67ec81f99", "604e92d1-3e00-4df8-bea2-13ea3559f5ca", "Admin", "Administrator" },
-                    { "7069dc88-123a-48b3-a0c8-4eee1e4c526c", "d074b52d-355d-4cd3-b66c-12322feae8d1", "Patient", "Patient" },
-                    { "f12ea926-7518-4e15-b52a-65c3b56b6d5e", "bd45bd4b-9e5e-4aa9-a641-e378ef1d7a83", "Doktor", "Doktor" }
+                    { "573712a1-8697-4a15-8239-d1f193eb9c5b", "b109431b-f04e-46c2-b78a-1b03b01f5e88", "Editor", "Editor" },
+                    { "d67852a7-ce20-40c5-b741-37bb627938f4", "e2238329-3efa-456b-b87e-eee2a04a8f6f", "Patient", "Patient" },
+                    { "ea31a50f-0770-4762-bb7f-f6db9133caf2", "d41853e0-52d3-4f15-8a14-f75a4599d599", "Admin", "Administrator" },
+                    { "edeb2591-7ec4-49c4-b369-fa8fab2894b5", "a96e825d-e82a-4351-a1ef-03cb207640bd", "Doktor", "Doktor" }
                 });
 
             migrationBuilder.InsertData(
-                table: "LogBooks",
-                columns: new[] { "LogBookId", "CreatorId", "Field1", "Field2", "Field3", "IconUrl", "Name", "Precision", "Unit1", "Unit2", "Unit3" },
-                values: new object[,]
-                {
-                    { 1, null, null, null, null, null, "Diary", 0, null, null, null },
-                    { 2, null, "weight", null, null, null, "Weight", 1, "kg", null, null },
-                    { 3, null, "systolic", "diastolic", "pulse", null, "Blood pressure", 0, null, null, null },
-                    { 4, null, "temperature", null, null, null, "Temperature", 1, "°C", null, null },
-                    { 5, null, "drink", null, null, null, "Water", 1, "ml", null, null },
-                    { 6, null, "glucose", null, null, null, "Glucose", 1, "mmol/L", null, null }
-                });
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DateOfBirth", "Email", "EmailConfirmed", "FirstName", "Gender", "Language", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "b6dcb5b7-5b8b-4ac4-837b-3404b9507ee4", 0, "5b53577d-a4ba-4886-a75a-e90646fb8f25", null, null, false, null, null, 1, null, false, null, null, "ADMIN", "AQAAAAEAACcQAAAAEDsKGu2lwNSZIjDPB4DBG9b5wtoKl3DdrdkNFrDfsSTQhvi3PoQV9SZCwedV5Tvd+A==", null, false, "30e906af-1bce-437a-8695-dbf418cb8f6d", false, "Admin" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "ea31a50f-0770-4762-bb7f-f6db9133caf2", "b6dcb5b7-5b8b-4ac4-837b-3404b9507ee4" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppUserLogBook_UsersWhoChoosenId",
+                table: "AppUserLogBook",
+                column: "UsersWhoChoosenId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -298,6 +324,9 @@ namespace MedikoData.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "AppUserLogBook");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 

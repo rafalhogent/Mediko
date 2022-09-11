@@ -31,17 +31,21 @@ namespace MedikoData
             base.OnModelCreating(builder);
 
 
+            string adminRoleGUID = Guid.NewGuid().ToString();
+            string patientRoleGUID = Guid.NewGuid().ToString();
+            string adminGUID = Guid.NewGuid().ToString();
+
 
             builder.Entity<IdentityRole>().HasData(
                 new IdentityRole
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    Id = adminRoleGUID,
                     Name = "Admin",
                     NormalizedName = "Administrator"
                 },
                 new IdentityRole
                 {
-                    Id = Guid.NewGuid().ToString(),
+                    Id = patientRoleGUID,
                     Name = "Patient",
                     NormalizedName = "Patient"
                 },
@@ -50,8 +54,7 @@ namespace MedikoData
                     Id = Guid.NewGuid().ToString(),
                     Name = "Doktor",
                     NormalizedName = "Doktor"
-                }
-                ,
+                },
                 new IdentityRole
                 {
                     Id = Guid.NewGuid().ToString(),
@@ -66,8 +69,27 @@ namespace MedikoData
             builder.ApplyConfiguration(new LogConfiguration());
 
 
+            // - - - Create Admin AppUser - - -
+            AppUser admin = new AppUser
+            {
+                Id = adminGUID,
+                UserName = "Admin",
+                NormalizedUserName = "ADMIN"
+            };
 
-           
+            // - - - Set Admin Password - - - 
+            PasswordHasher<AppUser> passwordHasher = new PasswordHasher<AppUser>();
+            admin.PasswordHash = passwordHasher.HashPassword(admin, "Mediko2022#");
+
+            // - - - Seed User - - - 
+            builder.Entity<AppUser>().HasData(admin);
+
+            // - - - Set AdminRole to user Admin - - -
+            builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
+            {
+                RoleId = adminRoleGUID,
+                UserId = adminGUID
+            });
         }
 
 

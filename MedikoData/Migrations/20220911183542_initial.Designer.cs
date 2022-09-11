@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MedikoData.Migrations
 {
     [DbContext(typeof(MedikoDbContext))]
-    [Migration("20220907230057_initial")]
+    [Migration("20220911183542_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,21 @@ namespace MedikoData.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("AppUserLogBook", b =>
+                {
+                    b.Property<int>("ChoosenLogbooksLogBookId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UsersWhoChoosenId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ChoosenLogbooksLogBookId", "UsersWhoChoosenId");
+
+                    b.HasIndex("UsersWhoChoosenId");
+
+                    b.ToTable("AppUserLogBook");
+                });
 
             modelBuilder.Entity("MedikoData.Entities.AppUser", b =>
                 {
@@ -104,6 +119,23 @@ namespace MedikoData.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "b6dcb5b7-5b8b-4ac4-837b-3404b9507ee4",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "5b53577d-a4ba-4886-a75a-e90646fb8f25",
+                            EmailConfirmed = false,
+                            Language = 1,
+                            LockoutEnabled = false,
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDsKGu2lwNSZIjDPB4DBG9b5wtoKl3DdrdkNFrDfsSTQhvi3PoQV9SZCwedV5Tvd+A==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "30e906af-1bce-437a-8695-dbf418cb8f6d",
+                            TwoFactorEnabled = false,
+                            UserName = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("MedikoData.Entities.Log", b =>
@@ -189,55 +221,6 @@ namespace MedikoData.Migrations
                     b.HasIndex("CreatorId");
 
                     b.ToTable("LogBooks");
-
-                    b.HasData(
-                        new
-                        {
-                            LogBookId = 1,
-                            Name = "Diary",
-                            Precision = 0
-                        },
-                        new
-                        {
-                            LogBookId = 2,
-                            Field1 = "weight",
-                            Name = "Weight",
-                            Precision = 1,
-                            Unit1 = "kg"
-                        },
-                        new
-                        {
-                            LogBookId = 3,
-                            Field1 = "systolic",
-                            Field2 = "diastolic",
-                            Field3 = "pulse",
-                            Name = "Blood pressure",
-                            Precision = 0
-                        },
-                        new
-                        {
-                            LogBookId = 4,
-                            Field1 = "temperature",
-                            Name = "Temperature",
-                            Precision = 1,
-                            Unit1 = "°C"
-                        },
-                        new
-                        {
-                            LogBookId = 5,
-                            Field1 = "drink",
-                            Name = "Water",
-                            Precision = 1,
-                            Unit1 = "ml"
-                        },
-                        new
-                        {
-                            LogBookId = 6,
-                            Field1 = "glucose",
-                            Name = "Glucose",
-                            Precision = 1,
-                            Unit1 = "mmol/L"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -269,29 +252,29 @@ namespace MedikoData.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "683be810-c308-495e-b264-8fa67ec81f99",
-                            ConcurrencyStamp = "604e92d1-3e00-4df8-bea2-13ea3559f5ca",
+                            Id = "ea31a50f-0770-4762-bb7f-f6db9133caf2",
+                            ConcurrencyStamp = "d41853e0-52d3-4f15-8a14-f75a4599d599",
                             Name = "Admin",
                             NormalizedName = "Administrator"
                         },
                         new
                         {
-                            Id = "7069dc88-123a-48b3-a0c8-4eee1e4c526c",
-                            ConcurrencyStamp = "d074b52d-355d-4cd3-b66c-12322feae8d1",
+                            Id = "d67852a7-ce20-40c5-b741-37bb627938f4",
+                            ConcurrencyStamp = "e2238329-3efa-456b-b87e-eee2a04a8f6f",
                             Name = "Patient",
                             NormalizedName = "Patient"
                         },
                         new
                         {
-                            Id = "f12ea926-7518-4e15-b52a-65c3b56b6d5e",
-                            ConcurrencyStamp = "bd45bd4b-9e5e-4aa9-a641-e378ef1d7a83",
+                            Id = "edeb2591-7ec4-49c4-b369-fa8fab2894b5",
+                            ConcurrencyStamp = "a96e825d-e82a-4351-a1ef-03cb207640bd",
                             Name = "Doktor",
                             NormalizedName = "Doktor"
                         },
                         new
                         {
-                            Id = "5695f4a9-2de6-4e2b-a9ca-969a052e0ca1",
-                            ConcurrencyStamp = "a1263f8a-f596-476e-a4bc-f897dc7c8e7b",
+                            Id = "573712a1-8697-4a15-8239-d1f193eb9c5b",
+                            ConcurrencyStamp = "b109431b-f04e-46c2-b78a-1b03b01f5e88",
                             Name = "Editor",
                             NormalizedName = "Editor"
                         });
@@ -382,6 +365,13 @@ namespace MedikoData.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "b6dcb5b7-5b8b-4ac4-837b-3404b9507ee4",
+                            RoleId = "ea31a50f-0770-4762-bb7f-f6db9133caf2"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -401,6 +391,21 @@ namespace MedikoData.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("AppUserLogBook", b =>
+                {
+                    b.HasOne("MedikoData.Entities.LogBook", null)
+                        .WithMany()
+                        .HasForeignKey("ChoosenLogbooksLogBookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MedikoData.Entities.AppUser", null)
+                        .WithMany()
+                        .HasForeignKey("UsersWhoChoosenId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MedikoData.Entities.Log", b =>
@@ -425,7 +430,7 @@ namespace MedikoData.Migrations
             modelBuilder.Entity("MedikoData.Entities.LogBook", b =>
                 {
                     b.HasOne("MedikoData.Entities.AppUser", "Creator")
-                        .WithMany("CustomLogTypes")
+                        .WithMany("CustomLogbooks")
                         .HasForeignKey("CreatorId");
 
                     b.Navigation("Creator");
@@ -484,7 +489,7 @@ namespace MedikoData.Migrations
 
             modelBuilder.Entity("MedikoData.Entities.AppUser", b =>
                 {
-                    b.Navigation("CustomLogTypes");
+                    b.Navigation("CustomLogbooks");
 
                     b.Navigation("Logs");
                 });
