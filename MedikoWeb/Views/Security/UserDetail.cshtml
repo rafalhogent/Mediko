@@ -1,6 +1,6 @@
 ﻿@model UserDetailViewModel
 @{
-    ViewData["Title"] = "Mediko - " + Model.UserName ;
+    ViewData["Title"] = "Mediko - " + Model.UserName;
 }
 <h2 class="m-3"><i>@Model.UserName</i></h2>
 <h5 class="m-3"><i>@Model.UserId</i></h5>
@@ -22,11 +22,132 @@
                     </form>
                 </div>
             </div>
-        </div>        
+        </div>
 
     }
 }
 
 
-<a asp-action="Index"
-   class="btn btn-primary mt-4">Terug</a>
+<div>
+@*    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdropLive">
+        Gebruiker verwijderen
+    </button>*@
+
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModalDefault">
+        Gebruiker verwijderen
+    </button>
+
+</div>
+<div>
+    <a asp-action="Index"
+       class="btn btn-primary mt-4">Terug naar overzicht</a>
+</div>
+
+
+@*<div class="container">
+          <div>
+        <div class="bd-example-snippet bd-code-snippet"><div class="bd-example">
+        <div class="d-flex justify-content-between flex-wrap">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalDefault">
+            Launch demo modal
+          </button>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropLive">
+            Launch static backdrop modal
+          </button>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCenteredScrollable">
+            Vertically centered scrollable modal
+          </button>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalFullscreen">
+            Full screen
+          </button>
+        </div>
+        </div></div>
+      </div>
+</div>*@
+
+
+
+
+
+<div class="modal fade" id="exampleModalDefault" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Gebruiker verwijderen</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Ben je zeker dat je @Model.UserName wil verwijderen?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuleren</button>
+                @*<button  type="button" class="btn btn-danger">Zeker verwijderen</button>*@
+                @*<a class="btn btn-danger" asp-action="RemoveUser" asp-route-id="@Model.UserId">Zeker verwijderen</a>*@
+                <form asp-action="RemoveUser"
+                      asp-route-id="@Model.UserId" method="post">
+                    <input type="submit" value="Zeker verwijderen" class="btn btn-danger" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*<div class="modal fade" id="staticBackdropLive" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLiveLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLiveLabel">Verwijderen bevestiging</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>I will not close if you click outside me. Don't even try to press escape key.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Understood</button>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+@*<div class="modal fade" id="exampleModalCenteredScrollable" tabindex="-1" aria-labelledby="exampleModalCenteredScrollableTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenteredScrollableTitle">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>This is some placeholder content to show the scrolling behavior for modals. We use repeated line breaks to demonstrate how content can exceed minimum inner height, thereby showing inner scrolling. When content becomes longer than the predefined max-height of modal, content will be cropped and scrollable within the modal.</p>
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                <p>This content should appear at the bottom after you scroll.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+*@
+
+
+@*<div class="modal fade" id="exampleModalFullscreen" tabindex="-1" aria-labelledby="exampleModalFullscreenLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title h4" id="exampleModalFullscreenLabel">Full screen modal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+
