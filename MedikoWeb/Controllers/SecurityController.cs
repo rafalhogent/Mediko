@@ -85,5 +85,19 @@ namespace MedikoWeb.Controllers
             return RedirectToAction(nameof(UserDetail), new { id = user.Id });
         }
 
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user != null)
+            {
+                await _userManager.DeleteAsync(user);
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }
