@@ -117,7 +117,15 @@ namespace MedikoWeb.Controllers
 
                 if (result.Succeeded)
                 {
-                    await _signinManager.SignInAsync(user, isPersistent: false);
+                    var nieuwUser = _userManager.FindByNameAsync(user.UserName).Result;
+                    
+
+                    if (!_userManager.IsInRoleAsync(nieuwUser, "Patient").Result)
+                    {
+                        await _userManager.AddToRoleAsync(nieuwUser, "Patient");
+                    }
+
+                    await _signinManager.SignInAsync(nieuwUser, isPersistent: false);
 
 
                     return RedirectToAction(nameof(Index), "Home");
