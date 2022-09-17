@@ -64,8 +64,6 @@ namespace MedikoData.Repos
             var user = await _context.Users.FindAsync(userId);
             var logbook = await _context.LogBooks.FindAsync(logbookId);
 
-
-
             if (user != null && logbook != null) logbook.UsersWhoChoosen.Add(user);
             await _context.SaveChangesAsync();
         }
@@ -80,17 +78,16 @@ namespace MedikoData.Repos
         {
             var user = await _context.Users.FindAsync(userId);
 
-            var logbook = await _context.LogBooks.FindAsync(logbookId);
+            var logbook = await _context.LogBooks
+                                        .Include(x=> x.UsersWhoChoosen)
+                                        .Where(x => x.LogBookId == logbookId).FirstOrDefaultAsync();
 
             if (user != null && logbook != null && logbook.UsersWhoChoosen.Contains(user))
             {
                 logbook.UsersWhoChoosen.Remove(user);
                 await _context.SaveChangesAsync();
-
             }
                 
-                
-
         }
     }
 }

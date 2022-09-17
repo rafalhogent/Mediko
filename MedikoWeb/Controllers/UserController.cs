@@ -17,8 +17,8 @@ namespace MedikoWeb.Controllers
         private readonly LogBookService _logbookService;
 
         public UserController(UserManager<AppUser> userManager,
-                    SignInManager<AppUser> signInManager,
-                    LogBookService logBookService
+                              SignInManager<AppUser> signInManager,
+                              LogBookService logBookService
             )
         {
             _userManager = userManager;
@@ -193,7 +193,6 @@ namespace MedikoWeb.Controllers
                     {
                         await _logbookService.AddChoosenLogbookForUser(optionsVM.UserId, selection.LogbookId);
                     }
-
                 }
                 else
                 {

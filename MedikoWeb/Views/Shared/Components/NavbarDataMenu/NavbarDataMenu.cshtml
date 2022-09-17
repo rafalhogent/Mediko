@@ -1,4 +1,4 @@
-﻿
+﻿@model DataMenuViewModel
 
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" role="button"
@@ -7,13 +7,13 @@
             Gezondheid logs
         </a>
         <ul class="dropdown-menu">
-            
-            <li><a class="dropdown-item" href="#">Gewicht </a> </li>
-            <li><a class="dropdown-item" href="#">Bloeddruk</a></li>
-            <li><a class="dropdown-item" href="#">Water</a></li>
-            <li><a class="dropdown-item" href="#">Temperature</a></li>
-            <li><a class="dropdown-item" href="#">Glucose</a></li>
-            
+            @{
+                foreach (var logbook in Model.ChoosenLogbooks)
+                {
+                    <li><a class="dropdown-item">@logbook.Name</a></li>
+                }
+            }
+
             <li> <hr class="dropdown-divider"> </li>
             <li><a class="dropdown-item" href="#">Instellingen</a></li>
         </ul>
