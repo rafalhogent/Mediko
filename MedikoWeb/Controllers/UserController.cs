@@ -66,9 +66,17 @@ namespace MedikoWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-
+                if (string.IsNullOrEmpty(userVM.UserName) || string.IsNullOrEmpty(userVM.Password))
+                {
+                    ModelState.AddModelError("LoginError", "Gebruikersnaam en wachtwoor zij verplicht");
+                    return View();
+                }
                 var foundUser = await _userManager.FindByNameAsync(userVM.UserName);
-                if (foundUser == null) return NotFound();
+                if (foundUser == null)
+                {
+                    ModelState.AddModelError("LoginError", "Gebruikersnaam of wachtoord niet correct");
+                    return View();
+                }
 
                 var result = await _signinManager
                     .PasswordSignInAsync(foundUser, userVM.Password, false, false);
@@ -82,7 +90,7 @@ namespace MedikoWeb.Controllers
 
 
         [Route("Logout")]
-        public async Task<IActionResult> LogOut()
+        public async Task<IActionResult> Logout()
         {
             await _signinManager.SignOutAsync();
             return RedirectToAction(nameof(Index), "Home");

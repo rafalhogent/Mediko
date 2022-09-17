@@ -57,7 +57,8 @@
 
                 <a class="navbar-brand ms-4" asp-action="Index" asp-controller="Home">
                     <svg class="bi logo" fill="currentColor">
-                        <use xlink:href="../icons/bootstrap-icons.svg#heart-pulse-fill"></use>
+                        @*<use xlink:href="../icons/bootstrap-icons.svg#heart-pulse-fill"></use>*@
+                        <use xlink:href="/icons/bootstrap-icons.svg#heart-pulse-fill"></use>
                     </svg>
                     <span>Mediko</span>
                 </a>
@@ -71,7 +72,7 @@
 
                 <div class="collapse navbar-collapse ms-4" id="navbarCollapse">
                     <ul class="navbar-nav me-auto mb-2 mb-md-0">@await Component.InvokeAsync("NavbarDataMenu")</ul>
-                    <ul class="navbar-nav ms-auto mb-2 mb-md-0">@await Component.InvokeAsync("NavbarUserMenu")</ul>
+                    <ul class="navbar-nav ms-auto  mb-2 mb-md-0">@await Component.InvokeAsync("NavbarUserMenu")</ul>
                 </div>
 
             </div>
@@ -88,31 +89,20 @@
     </div>
 
 
-
-    <!--
-    <footer class="border-top footer text-muted py-2 mt-5 ">
-            <div class="container">
-                &copy; 2022 - Mediko Beta 0.21 - Rafal Kowalski <a asp-area="" asp-controller="Home" 
-                asp-action="Privacy">Privacy</a>
-            </div>
-        </footer>
-      -->
-
       <!-- Footer new -->
     <footer class="footer d-flex flex-wrap justify-content-between align-items-center py-2 mt-4 mb-2 border-top">
-        <div class="ms-4 col-sm-4 d-flex align-items-center">
-            <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-                @*<svg class="bi" width="30" height="24"><use xlink:href="#bootstrap" /></svg>*@
-            </a>
-            <span class=" mb-3 mb-sm-0 text-muted">&copy; 2022 - Mediko Beta 0.21 - Rafal Kowalski  </span>
+        <div class="ms-4 col-sm-6 d-flex align-items-center">
+
+            <span class=" my-2  text-muted">&copy; 2022 - Mediko Beta 0.21 
+                <span class="d-none d-md-inline">- Rafal Kowalski</span>   </span>
         </div>
 
-        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex me-4">
-            <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24">
+        <ul class="col-2 justify-content-end list-unstyled d-flex me-4 my-2">
+            <li class="ms-3"><a class="" href="#"><svg class="bi" width="24" height="24">
                 <use xlink:href="/icons/bootstrap-icons.svg#twitter" /></svg></a></li>
-            <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24">
+            <li class="ms-3"><a class="" href="#"><svg class="bi" width="24" height="24">
                 <use xlink:href="/icons/bootstrap-icons.svg#github" /></svg></a></li>
-            <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24">
+            <li class="ms-3"><a class="" href="#"><svg class="bi" width="24" height="24">
                 <use xlink:href="/icons/bootstrap-icons.svg#youtube" /></svg></a></li>
 
         </ul>

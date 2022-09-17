@@ -38,7 +38,11 @@ body {
     font-weight: 700;
 }
 
-
+    .dropdown-item:hover, .dropdown-item:focus {
+        color: white;
+        /*background-color: #e9ecef;*/
+        background-color: rgba(59, 93, 227, 0.9);
+    }
 
 
 
@@ -100,9 +104,9 @@ body {
     /*    position: absolute;
     z-index: 1000;
     display: none;
-    min-width: 10rem;
-    padding: 0.5rem 0;
-    margin: 0;
+    min-width: 10rem;*/
+    padding: 0.6rem 0.5rem ;
+    /*margin: 0;
     font-size: 1rem;
     color: #212529;
     text-align: left;
@@ -112,6 +116,8 @@ body {
     
     border-radius: 0.25rem;*/
     border: 2px solid rgba(0, 0, 0, 0.5);
+    max-height: 300px;
+    overflow-y: auto;
 }
 
 .bi {

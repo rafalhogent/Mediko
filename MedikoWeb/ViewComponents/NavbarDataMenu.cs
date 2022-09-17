@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using MedikoData.Entities;
+using MedikoWeb.Models;
 
 namespace MedikoWeb.ViewComponents
 {
@@ -15,7 +16,12 @@ namespace MedikoWeb.ViewComponents
         public IViewComponentResult Invoke()
         {
             if (_signinManager.IsSignedIn((System.Security.Claims.ClaimsPrincipal)User))
+            {
+                
                 return View("NavbarDataMenu");
+            }
+
+
             else return View();
         }
     }

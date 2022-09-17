@@ -33,7 +33,7 @@ namespace MedikoWeb.Controllers
             return View(allUsers);
         }
 
-        [HttpGet]
+        //[HttpGet]
         public async Task<IActionResult> UserDetail(string id)
         {
             var user = await _userManager.FindByIdAsync(id);

@@ -4,84 +4,45 @@
     ViewBag.Title = "Log in Mediko";
 }
 
-@*
-<h2>Login page</h2>
-
-<form asp-action="Login" method="post">
-
-    <div class="group">
-        <div class="group">
-            <div>
-                <label asp-for="UserName"></label>
-                <span asp-validation-for=UserName></span>
-            </div>
-            <input asp-for="UserName" />
-        </div>
 
 
-        <div class="group">
-            <div>
-                <label asp-for="Password"></label>
-                <span asp-validation-for=Password></span>
-            </div>
-            <input asp-for="Password" />
-        </div>
-    </div>
-
-    <input class="btn btn-primary" type="submit" value="Inschrijven" />
-
-</form>*@
-
-
-<div class="container col-xl-10 col-xxl-8 px-4 py-5">
-    <div class="row align-items-center g-lg-5 py-5">
-
+    <div class="row align-items-center g-lg-5 py-1 py-lg-5 mx-2">
 
         <div class=" col-3 mx-auto col-lg-5">
-            <img src="../images/dotnetbot2.png" class="d-block mx-lg-auto img-fluid" alt="dotnetbot"
-                 width="400" height="400" loading="lazy" ;">
+            <img src="../images/dotnetbot2.png" class="d-none d-lg-block mx-lg-auto img-fluid" alt="dotnetbot"
+                 width="400" height="400" loading="lazy">
         </div>
 
-        <div class="col-md-10 mx-auto col-lg-6 col-xl-7 col-xxl-7">
-            <h2 class="text-center">Aanmelden in Mediko</h2>
+        <div class="col-md-10 mx-auto col-lg-6 col-xl-7 col-xxl-7mb-3">
+            <p class="text-center my-3">
+            <img src="../images/dotnetbot2.png" class="d-inline-block d-lg-none img-fluid" alt="dotnetbot"
+                 width="80" height="80">
+            <span class="ms-3 fs-4 d-inline-block my-2">Aanmelden in Mediko</span>
+        </p>
             <form class="p-4 p-md-5 border rounded-3 bg-light" asp-action="Login" method="post">
 
-                <div class="form-floating mb-3">
-                    <input type="text" asp-for="UserName" class="form-control">
-                    <label for="floatingInput">Gebruikersnaam</label>
+                <div style="min-height:160px">
+                    <div class="form-floating mb-3">
+                        <input type="text" asp-for="UserName" class="form-control">
+                        <label for="floatingInput">Gebruikersnaam</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="password" asp-for="Password" class="form-control">
+                        <label for="floatingPassword">Wachtwoord</label>
+                    </div>
+                    @Html.ValidationMessage("LoginError", new{@class="text-danger"})
+                    @*<span asp-validation-for="Password" class="text-danger"></span>*@
                 </div>
 
-                <div class="form-floating mb-3">
-                    <input type="password" asp-for="Password" class="form-control">
-                    <label for="floatingPassword">Wachtword</label>
+                <div class="mt-4">
+                    <input class="btn btn-primary" type="submit" value="Inloggen" />
+                    <a asp-action="Register" class="btn btn-secondary ms-2">Registreren</a>
                 </div>
-
-
-@*                <div class="form-floating mb-3">
-                    <input type="text" asp-for="UserName" class="form-control" 
-                    id="floatingInput" placeholder="Username">
-                    <label for="floatingInput">Gebruiker naam</label>
-                </div>
-
-                <div class="form-floating mb-3">
-                    <input type="password" asp-for="UserName" class="form-control" 
-                        id="floatingPassword" placeholder="Password">
-                    <label for="floatingPassword">Wachtword</label>
-                </div>*@
-
-@*                <div class="checkbox mb-3">
-                    <label>
-                        <input type="checkbox" value="remember-me"> Onthoud mij
-                    </label>
-                </div>*@
-
-                
-                <input class="btn btn-primary" type="submit" value="Inloggen" />
-                <a asp-action="Register" class="btn btn-secondary">Registreren</a>
 
                 @*<hr class="my-4">*@
                 @*<small class="text-muted">By clicking Sign up, you agree to the terms of use.</small>*@
             </form>
         </div>
     </div>
-</div>
+
