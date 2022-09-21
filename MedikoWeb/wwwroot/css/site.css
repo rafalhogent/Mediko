@@ -1,6 +1,32 @@
 html {
-    font-size: 16px;
+    font-size: 14px;
 }
+
+
+@media (max-width: 500px) {
+    body {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 380px) {
+    body {
+        font-size: 10px;
+       
+    }
+}
+@media (max-width: 320px) {
+    body {
+        font-size: 9px;
+       
+    }
+}
+
+/*@media (max-width: 720px) {
+    body {
+        font-size: 14px;
+    }
+}*/
 
 /*@media (min-width: 768px) {
   html {
@@ -143,6 +169,15 @@ svg.bi.logo {
     fill: currentColor;
 }
 
+.bi.logo {
+    font-size: 22px;
+}
+
+.icon{
+    margin-right: 5px;
+}
+
+
 
 
 .btn-primary:hover {
@@ -175,17 +210,19 @@ body {
 
 /* Form */
 .field-date{
-    max-width:330px !important;
+    max-width:330px ;
 }
 
 .field-value{
-    max-width:120px !important;
+    max-width:120px ;
     /*max-width:100px !important*/ 
 }
 
 .field-comment{
     
-    min-width:260px !important;
-    min-width:260px !important;
+    min-width:230px ;
+    max-width:380px ;
 
 }
+
+

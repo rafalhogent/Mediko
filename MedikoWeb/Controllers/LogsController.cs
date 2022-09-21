@@ -82,7 +82,7 @@ namespace MedikoWeb.Controllers
 
             Log newLog = new Log();
 
-            newLog.LogTime = diaryVM.Czas;
+            newLog.LogTime = diaryVM.NewLog.DateAndTime;
             newLog.Value1 = diaryVM.NewLog.Value1;
             newLog.Value2 = diaryVM.NewLog.Value2;
             newLog.Value3 = diaryVM.NewLog.Value3;
