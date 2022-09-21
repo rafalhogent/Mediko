@@ -15,6 +15,8 @@ builder.Services.AddDbContext<MedikoDbContext>(options =>
 
 builder.Services.AddTransient<LogBookService>();
 builder.Services.AddTransient<ILogBookRepo, SQLLogBookRepo>();
+builder.Services.AddTransient<LogsService>();
+builder.Services.AddTransient<ILogsRepo, SQLLogsRepo>();
 
 builder.Services.AddIdentity<AppUser, IdentityRole>(config =>
 {

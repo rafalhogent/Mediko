@@ -28,11 +28,8 @@ namespace MedikoWeb.Controllers
 
 
 
-
-
         public IActionResult Index()
         {
-
             if (User.Identity?.IsAuthenticated == true)
                 return RedirectToAction(nameof(Dashboard));
 
@@ -48,7 +45,6 @@ namespace MedikoWeb.Controllers
                 return RedirectToAction(nameof(Login));
 
             return View();
-
         }
 
 
@@ -114,7 +110,6 @@ namespace MedikoWeb.Controllers
                 var user = new AppUser
                 {
                     UserName = userVM.UserName,
-
                 };
 
                 var result = await _userManager.CreateAsync(user, userVM.Password);
@@ -123,14 +118,12 @@ namespace MedikoWeb.Controllers
                 {
                     var nieuwUser = _userManager.FindByNameAsync(user.UserName).Result;
 
-
                     if (!_userManager.IsInRoleAsync(nieuwUser, "Patient").Result)
                     {
                         await _userManager.AddToRoleAsync(nieuwUser, "Patient");
                     }
 
                     await _signinManager.SignInAsync(nieuwUser, isPersistent: false);
-
 
                     return RedirectToAction(nameof(Index), "Home");
                 }
@@ -205,8 +198,6 @@ namespace MedikoWeb.Controllers
 
             return RedirectToAction(nameof(Options));
         }
-
-
 
     }
 }

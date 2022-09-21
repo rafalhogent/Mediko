@@ -31,7 +31,7 @@ namespace MedikoServices
            return await _logBookRepo.GetChoosenLogbooks(id);
         }
 
-        public async Task<LogBook?> GetLogBookById(int? id)
+        public async Task<LogBook> GetLogBookById(int? id)
         {
             return await _logBookRepo.GetLogBookById(id);
         }

@@ -170,3 +170,22 @@ body {
     /*line-height: 30px;*/
     /*border: 1px solid black*/
 }
+
+
+
+/* Form */
+.field-date{
+    max-width:330px !important;
+}
+
+.field-value{
+    max-width:120px !important;
+    /*max-width:100px !important*/ 
+}
+
+.field-comment{
+    
+    min-width:260px !important;
+    min-width:260px !important;
+
+}

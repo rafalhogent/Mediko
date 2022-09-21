@@ -10,12 +10,13 @@
             @{
                 foreach (var logbook in Model.ChoosenLogbooks)
                 {
-                    <li><a class="dropdown-item">@logbook.Name</a></li>
+                    <li><a asp-action="Diary" asp-controller="Logs" asp-route-logbookId="@logbook.Id"
+                            class="dropdown-item">@logbook.Name</a></li>
                 }
             }
 
             <li> <hr class="dropdown-divider"> </li>
-            <li><a class="dropdown-item" href="#">Instellingen</a></li>
+            <li><a class="dropdown-item" asp-action="Options" asp-controller="User">Instellingen</a></li>
         </ul>
     </li>
 
