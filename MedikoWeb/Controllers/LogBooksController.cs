@@ -42,7 +42,9 @@ namespace MedikoWeb.Controllers
 
 
             string userId = _userManager.GetUserAsync(User).Result.Id;
+
             var logbooks = await _logbookService.GetLogBooksForUser(userId);
+            //var usersLogbooks = await _logbookService.GetUsersLogbooksAsync(userId);
 
             return logbooks != null ? View(logbooks) : View(new List<LogBook>());
 
@@ -63,8 +65,6 @@ namespace MedikoWeb.Controllers
         }
 
         // POST: LogBooks/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
@@ -84,8 +84,10 @@ namespace MedikoWeb.Controllers
                     Precision = logBookVM.Precision
                 };
 
-                //logbook.Creator = User.IsInRole("Admin") || User.IsInRole("Editor") ?
-                //    null : _userManager.GetUserAsync(User).Result;
+               
+
+                logbook.Creator = User.IsInRole("Admin") || User.IsInRole("Editor") ?
+                    null : _userManager.GetUserAsync(User).Result;
 
                 await _logbookService.AddNewLogBook(logbook);
 
@@ -103,6 +105,7 @@ namespace MedikoWeb.Controllers
 
             var logbookVM = new LogBookViewModel
             {
+                Id = id.Value,
                 Name = logbook.Name,
                 Field1 = logbook.Field1,
                 Field2 = logbook.Field2,

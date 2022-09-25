@@ -8,13 +8,14 @@ using System.Linq;
 
 namespace MedikoWeb.Controllers
 {
-    [Route("Account")]
+    
     public class UserController : Controller
     {
 
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signinManager;
         private readonly LogBookService _logbookService;
+        public string? _message;
 
         public UserController(UserManager<AppUser> userManager,
                               SignInManager<AppUser> signInManager,
@@ -27,7 +28,7 @@ namespace MedikoWeb.Controllers
         }
 
 
-
+        [Route("Account")]
         public IActionResult Index()
         {
             if (User.Identity?.IsAuthenticated == true)
@@ -78,8 +79,10 @@ namespace MedikoWeb.Controllers
                     .PasswordSignInAsync(foundUser, userVM.Password, false, false);
 
                 if (result.Succeeded) return RedirectToAction(nameof(Dashboard));
+                ModelState.AddModelError("LoginError", "Gebruikersnaam of wachtoord niet correct");
 
             }
+            
             return View();
         }
 
@@ -112,6 +115,12 @@ namespace MedikoWeb.Controllers
                     UserName = userVM.UserName,
                 };
 
+                var existingUser = await _userManager.FindByNameAsync(userVM.UserName);
+                if (existingUser != null)
+                {
+                    ModelState.AddModelError("UserExists", "Gebruikersnaam al bestaat, kies andere naam");
+                    return View();
+                }
                 var result = await _userManager.CreateAsync(user, userVM.Password);
 
                 if (result.Succeeded)
@@ -122,17 +131,20 @@ namespace MedikoWeb.Controllers
                     {
                         await _userManager.AddToRoleAsync(nieuwUser, "Patient");
                     }
+                    var logbooksForUser = await _logbookService.GetLogBooksForUser(nieuwUser.Id);
+                    var choosenLogbooks = await _logbookService.GetChoosenLogbooks(nieuwUser.Id);
 
+                    foreach (var logbook in logbooksForUser)
+                    {
+                        if (!choosenLogbooks.Contains(logbook))
+                        {
+                            await _logbookService.AddChoosenLogbookForUser(nieuwUser.Id, logbook.LogBookId);
+                        }
+                    }
                     await _signinManager.SignInAsync(nieuwUser, isPersistent: false);
 
                     return RedirectToAction(nameof(Index), "Home");
                 }
-
-                //foreach (var error in result.Errors)
-                //{
-                //    ModelState.AddModelError("", error.Description);
-                //}
-                //ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
 
             }
             return View(userVM);
@@ -165,7 +177,7 @@ namespace MedikoWeb.Controllers
             {
                 UserId = user.Id,
                 UserName = user.UserName,
-
+                Message = _message,
                 LogbookSelections = logbooksSelections
 
             };
@@ -199,5 +211,33 @@ namespace MedikoWeb.Controllers
             return RedirectToAction(nameof(Options));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ChangePassword()
+        {
+            if (User?.Identity?.IsAuthenticated != true)
+                return RedirectToAction(nameof(Login));
+
+            var user = await _userManager.GetUserAsync(User);
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePasswordConfirmed(UserEditPasswordViewModel editPassVM)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            string code = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var result = _userManager.ResetPasswordAsync(user, code, editPassVM.NewPassword);
+            if (result.Result.Succeeded)
+            {
+                _message = "Wachtwoord gewijzigd";
+            }
+            else
+            {
+                _message = "wijziging mislukt";
+            }
+            return RedirectToAction(nameof(Options));
+
+        }
     }
 }

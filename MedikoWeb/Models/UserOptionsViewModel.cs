@@ -6,5 +6,25 @@
         public string UserName { get; set; } = null!;
 
         public List<LogbookSelection> LogbookSelections { get; set; } = new List<LogbookSelection>();
+
+        public string? Message { get; set; }
+    }
+
+    public class LogbookSelection
+    {
+        public string LogbookName { get; set; } = null!;
+        public int LogbookId { get; set; }
+
+        public bool IsSelected { get; set; }
+
+        public LogbookSelection(string name, bool isSelected)
+        {
+            LogbookName = name;
+            IsSelected = isSelected;
+        }
+        public LogbookSelection()
+        {
+
+        }
     }
 }

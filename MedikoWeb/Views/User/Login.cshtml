@@ -1,7 +1,7 @@
 ﻿@model UserLoginViewModel
 
 @{
-    ViewBag.Title = "Log in Mediko";
+    ViewBag.Title = "Mediko - Login";
 }
 
 
@@ -19,7 +19,7 @@
                  width="80" height="80">
             <span class="ms-3 fs-4 d-inline-block my-2">Aanmelden in Mediko</span>
         </p>
-            <form class="p-4 p-md-5 border rounded-3 bg-light" asp-action="Login" method="post">
+            <form class="p-4 p-md-5 border rounded-3 bg-light form-signin" asp-action="Login" method="post">
 
                 <div style="min-height:160px">
                     <div class="form-floating mb-3">
@@ -32,7 +32,9 @@
                         <label for="floatingPassword">Wachtwoord</label>
                     </div>
                     @Html.ValidationMessage("LoginError", new{@class="text-danger"})
-                    @*<span asp-validation-for="Password" class="text-danger"></span>*@
+                    <span asp-validation-for="UserName" class="d-block text-danger"></span>
+                    <span asp-validation-for="Password" class="d-block text-danger"></span>
+                    @*<div asp-validation-summary="All"></div>*@
                 </div>
 
                 <div class="mt-4">
@@ -40,8 +42,6 @@
                     <a asp-action="Register" class="btn btn-secondary ms-2">Registreren</a>
                 </div>
 
-                @*<hr class="my-4">*@
-                @*<small class="text-muted">By clicking Sign up, you agree to the terms of use.</small>*@
             </form>
         </div>
     </div>

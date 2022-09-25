@@ -35,8 +35,7 @@ namespace MedikoWeb.ViewComponents
             //    return View("NavbarDataMenu", viewModel);
             //}
 
-
-
+            
             return View("LogEdit");
         }
     }

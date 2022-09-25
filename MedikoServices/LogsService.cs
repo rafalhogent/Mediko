@@ -35,5 +35,10 @@ namespace MedikoServices
         {
             return await _logsRepo.RemoveLogAsync(log);
         }
+
+        public async Task<bool> UpdateLogAsync(Log log)
+        {
+            return await _logsRepo.UpdateLogAsync(log);
+        }
     }
 }

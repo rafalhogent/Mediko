@@ -55,5 +55,13 @@ namespace MedikoData.Repos
            var result = _context.Logs.Remove(log);
             return await _context.SaveChangesAsync() > 0 ? true : false;
         }
+
+        public async Task<bool> UpdateLogAsync(Log log)
+        {
+            var logUpd = await GetLogByIdAsync(log.LogId);
+            if (logUpd == null) return false;
+            var result = _context.Logs.Update(logUpd);
+            return await _context.SaveChangesAsync() > 0 ? true : false;
+        }
     }
 }

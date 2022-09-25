@@ -13,5 +13,6 @@ namespace MedikoData.Repos
         Task<Log?> GetLogByIdAsync(int logId);
         Task<IEnumerable<Log>> GetUserLogsByLogbookIdAsync(string userId, int logbookId);
         Task<bool> RemoveLogAsync(Log log);
+        Task<bool> UpdateLogAsync(Log log);
     }
 }

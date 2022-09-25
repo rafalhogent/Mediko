@@ -13,6 +13,7 @@ namespace MedikoWeb.Controllers
         private readonly SignInManager<AppUser> _signinManager;
         private readonly LogBookService _logbookService;
         private readonly LogsService _logsService;
+        private static string? _message;
 
         public LogsController(UserManager<AppUser> userManager,
                               SignInManager<AppUser> signInManager,
@@ -47,6 +48,9 @@ namespace MedikoWeb.Controllers
             var logbook = _logbookService.GetLogBookById(logbookId).Result;
             if (logbook == null) RedirectToAction("Index", "Home");
 
+            //diaryVM.Message = string.IsNullOrWhiteSpace(_message) ? _message : null;
+            diaryVM.Message = !string.IsNullOrWhiteSpace(_message) ? _message + "" : null;
+            _message = null;
             diaryVM.Logbook = _logbookService.GetLogBookById(logbookId).Result;
             diaryVM.UserLogs = new List<Log>();
 
@@ -64,7 +68,7 @@ namespace MedikoWeb.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddLogToDiary(DiaryViewModel diaryVM)
+        public async Task<IActionResult> AddLog(DiaryViewModel diaryVM)
         {
             var logBook = await _logbookService.GetLogBookById(diaryVM.NewLog.LogbookId);
             if (logBook == null)
@@ -87,7 +91,7 @@ namespace MedikoWeb.Controllers
             newLog.Value2 = diaryVM.NewLog.Value2;
             newLog.Value3 = diaryVM.NewLog.Value3;
             newLog.Comment = diaryVM.NewLog.Comment;
-            //newLog.Comment = diaryVM.NewLog.DateAndTime + "";
+            
             newLog.LogBook = logBook;
 
             var result = await _logsService.AddNewLog(
@@ -108,16 +112,45 @@ namespace MedikoWeb.Controllers
         }
 
 
-        public async Task<IActionResult> DeleteLog(int logId)
+        public async Task<IActionResult> DeleteLog(int logid)
         {
-            var log = await _logsService.GetLogByIdAsync(logId);
+            var log = await _logsService.GetLogByIdAsync(logid);
             if (log != null)
             {
-                var result = _logsService.RemoveLogAsync(log);
+                var result = await _logsService.RemoveLogAsync(log);
+                if (result) _message = $"Log with id : {logid} removed";
+                else _message = $"Verwijderen Log with id : {logid} failed";
                 return RedirectToAction(nameof(Diary), new {logbookId = log.LogBook.LogBookId});
             }
-            return RedirectToAction(nameof(Index));
+            _message = $"Log with id : {logid} not found";
+            return RedirectToAction(nameof(Diary), new { logbookId = 1 });
+            //return RedirectToAction(nameof(Index));
 
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateLog(DiaryViewModel diaryVM)
+        {
+            if(diaryVM.NewLog.logId == null || diaryVM.NewLog.logId == 0)
+            {
+                _message = $"Log 0 not found";
+                return RedirectToAction(nameof(Diary), new { logbookId = diaryVM.NewLog.LogbookId});
+            }
+            var logToUpdate = await _logsService.GetLogByIdAsync(diaryVM.NewLog.logId.Value);
+            if (logToUpdate != null)
+            {
+                logToUpdate.LogTime = diaryVM.NewLog.DateAndTime;
+                logToUpdate.Value1 = diaryVM.NewLog.Value1;
+                logToUpdate.Value2 = diaryVM.NewLog.Value2;
+                logToUpdate.Value3 = diaryVM.NewLog.Value3;
+                logToUpdate.Comment = diaryVM.NewLog.Comment;
+
+                if (await _logsService.UpdateLogAsync(logToUpdate)) _message = $"Log {logToUpdate.LogId} succesful updated";
+                else _message = $"Log {logToUpdate.LogId} update failed";
+                return RedirectToAction(nameof(Diary), new { logbookId = diaryVM.NewLog.LogbookId});
+            }
+            _message = $"Log with id : {diaryVM.NewLog.logId} not found";
+            return RedirectToAction(nameof(Index));
         }
     }
 }

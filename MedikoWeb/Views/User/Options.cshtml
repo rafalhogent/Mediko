@@ -3,20 +3,36 @@
 <h2 class="m-3"><i>@Model.UserName</i></h2>
 <h5 class="m-3"><i>@Model.UserId</i></h5>
 
-@{
+<div class="container-sm mb-5">
+
+    @if (!string.IsNullOrEmpty(Model.Message))
+    {
+        <div class="col alert alert-info alert-dismissible">
+            @Model.Message
+        </div>
+
+    }
+
     <div>
-        <div class="bd-example-snippet bd-code-snippet">
+        <div class="ms-3">
             <div class="container m-5">
                 <form asp-action="UpdateChoosenLogbooks" method="post">
-                    <h5>Logbooks</h5>
+                    <h5>Gekozen logboeken:</h5>
                     @Html.HiddenFor(m=>m.UserName)
                     @Html.HiddenFor(m=>m.UserId)
                     @Html.EditorFor(a=>a.LogbookSelections)
                     <div class="mt-5">
-                        <button type="submit" class="btn btn-primary">Update Logbook list</button>
+                        <button type="submit" class="btn btn-primary">Opslaan</button>
                     </div>
                 </form>
+                <a class="btn btn-primary mt-2" href="LogBooks">
+                    <i class="bi bi-journal-bookmark-fill icon"></i>Logboeken beheren
+                </a>
             </div>
         </div>
     </div>
-}
+
+    <a class="btn btn-primary" asp-action="ChangePassword" asp-controller="User">
+        <i class="bi bi-lock-fill icon"></i>Wachtwoord wijzigen
+    </a>
+</div>

@@ -5,7 +5,7 @@ namespace MedikoWeb.Models
     public class LogViewModel
     {
         public int LogbookId { get; set; }
-
+        public int? logId { get; set; }
 
         //public DateOnly Date { get; set; } = DateOnly.FromDateTime(DateTime.Now);
         //public TimeOnly Time { get; set; } = TimeOnly.FromDateTime(DateTime.Now);
