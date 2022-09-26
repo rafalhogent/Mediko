@@ -3,10 +3,15 @@
     ViewData["Title"] = "Edit";
 }
 
-<h2>Edit Logbook</h2>
 
-<hr />
 <div class="container mb-3">
+
+    <h3>
+        <a class="btn btn-sm btn-secondary mb-1 me-2" asp-action="Options" asp-controller="User">
+            <i class="bi bi-arrow-left-square icon"></i>Terug</a>
+        Logboek wijzigen</h3>
+
+    <hr />
     <div class="container">
         <div class="col-md-10 col-xl-6 mb-5">
             <form asp-action="Edit">
@@ -74,7 +79,7 @@
                     <input type="submit" value="Opslaan" class="btn btn-primary" />
                     <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@Model.Id">
                         <i class="bi bi-trash-fill icon"></i>Verwijderen</a>
-                    <a class="btn btn-secondary" asp-action="Index">Terug</a>
+                    @*<a class="btn btn-secondary" asp-action="Index">Terug</a>*@
                 </div>
 
                 @* <div class="form-group">

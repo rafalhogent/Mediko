@@ -15,7 +15,9 @@
         public string LogbookName { get; set; } = null!;
         public int LogbookId { get; set; }
 
-        public bool IsSelected { get; set; }
+        public bool IsSelected { get; set; } = true;
+
+        public bool Editable { get; set; }
 
         public LogbookSelection(string name, bool isSelected)
         {

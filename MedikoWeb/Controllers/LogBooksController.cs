@@ -91,7 +91,7 @@ namespace MedikoWeb.Controllers
 
                 await _logbookService.AddNewLogBook(logbook);
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Options", "User");
             }
             return View(logBookVM);
         }
@@ -159,7 +159,7 @@ namespace MedikoWeb.Controllers
 
                 }
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Options", "User");
             }
             return View(logBookVM);
         }
@@ -202,7 +202,7 @@ namespace MedikoWeb.Controllers
 
             await _logbookService.DeleteLogBook(id);
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Options", "User");
         }
 
         //private bool LogBookExists(int id)

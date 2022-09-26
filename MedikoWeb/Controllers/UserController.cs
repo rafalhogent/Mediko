@@ -157,6 +157,7 @@ namespace MedikoWeb.Controllers
                 return RedirectToAction(nameof(Login));
 
             var user = await _userManager.GetUserAsync(User);
+            var isAdmin = User.IsInRole("Admin") || User.IsInRole("Editor");
 
             var logbooksForUser = await _logbookService.GetLogBooksForUser(user.Id);
             var choosenLogbooks = await _logbookService.GetChoosenLogbooks(user.Id);
@@ -169,8 +170,9 @@ namespace MedikoWeb.Controllers
                 {
                     LogbookName = logbook.Name,
                     LogbookId = logbook.LogBookId,
-                    IsSelected = choosenLogbooks.Contains(logbook)
-                }); ;
+                    IsSelected = choosenLogbooks.Contains(logbook),
+                    Editable = isAdmin && logbook.Creator == null || logbook.Creator?.Id == user.Id,
+                });
             }
 
             UserOptionsViewModel optionsVM = new UserOptionsViewModel

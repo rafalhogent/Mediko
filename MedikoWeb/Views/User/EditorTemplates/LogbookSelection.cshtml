@@ -1,10 +1,29 @@
 ﻿@model LogbookSelection
 
-<div class="container my-3">
+<tr class=" ">
+    <td style="width:70px">
+        @Html.CheckBoxFor(a=>a.IsSelected, new {@class = "form-check-input form-check form-switch"})
+        @Html.HiddenFor(a=>a.LogbookName)
+        @Html.HiddenFor(a=>a.LogbookId)
+    </td>
+    <td>
+        <a class="" asp-action="Details" asp-controller="LogBooks" asp-route-id="@Model.LogbookId">
+            @Model.LogbookName
+        </a>
+        
+    </td>
 
-    @Html.CheckBoxFor(a=>a.IsSelected, new {@class = "form-check-input me-2"})
-    @Html.HiddenFor(a=>a.LogbookName)
-    @Html.HiddenFor(a=>a.LogbookId)
-    @Model.LogbookName
+    <td>
+        @{
+            if (Model.Editable)
+            {
+                <a class="btn btn-sm btn-primary" asp-action="Edit" asp-controller="LogBooks" asp-route-id="@Model.LogbookId">
+                    <i class="bi bi-pencil-fill icon"></i>Wijzig
+                </a>
+            }
+        }
 
-</div>
+    </td>
+
+
+</tr>
