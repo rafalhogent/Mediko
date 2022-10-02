@@ -1,8 +1,68 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Mediko Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container col-xxl-9 px-4 py-5">
+
+
+
+
+
+    <div class="row mb-5">
+        <div class="col-md-7 my-auto">
+            <h1 class=" fw-bold lh-1">Welkom in Mediko. </h1>
+            <p class="lead">Mediko is een open-source web-applicatie, geschreven in C# en ASP.NET Core waarin jij je medische gegevens kan verzamelen, analyseren en delen. Login, maak een nieuwe account of bekijk de
+                <a asp-action="Demo" asp-controller="User"> <b>Demo-gebruiker</b> </a>.
+            </p>
+            <div class="d-grid gap-2 mb-5 d-md-flex justify-content-md-start">
+                <a asp-action="Login" asp-controller="User" class="btn btn-primary btn-lg px-4 me-md-2">Aanmelden</a>
+                <a asp-action="Register" asp-controller="User" class="btn btn-outline-secondary btn-lg px-4">Account maken</a>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="featurette-image img-fluid mx-auto p-4">
+                <img src="images/dotnetbot3.png" class="d-block mx-lg-auto img-fluid" alt="dotnet bot"
+                     height="500" loading="lazy" style="transform: scaleX(-1);">
+            </div>
+        </div>
+    </div>
+
+    <div class="b-divider"> </div>
+    
+    <div class="row my-5">
+
+        <div class="col-md-5">
+            <div class="img-fluid mx-auto my-auto p-3">
+                <img src="images/responsive.png" class="d-block mx-lg-auto img-fluid" alt="responsive design clipart"
+                     height="500" loading="lazy">
+            </div>
+        </div>
+
+        <div class="col-md-7 my-auto">
+            <h1 class=" fw-bold lh-1">Gebruik Mediko met mobile toestellen </h1>
+            <p class="lead">Mediko web-applicatie is ontworpen met responsive-design. </p>
+        </div>
+
+    </div>
+
+    <div class="b-divider"> </div>
+
+    <div class="row my-5">
+        <div class="col-md-7 my-auto">
+            <h1 class=" fw-bold lh-1">Je data is enkel van Jou </h1>
+            <p class="lead">
+                Wij respecteren jouw Privacy. Mediko deelt geen gegevens van jou met externe bedrijven
+            </p>
+
+        </div>
+        <div class="col-md-5">
+            <div class="featurette-image img-fluid mx-auto p-4 " style="width:120px; ">
+                <i class="bi bi-align-center bi-file-earmark-lock2" style="font-size:7em;"> </i>
+
+            </div>
+        </div>
+    </div>
+
+    
+
 </div>

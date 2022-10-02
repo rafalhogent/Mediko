@@ -34,7 +34,7 @@ namespace MedikoWeb.Controllers
             if (User.Identity?.IsAuthenticated == true)
                 return RedirectToAction(nameof(Dashboard));
 
-            return RedirectToAction(nameof(Login));
+            return RedirectToAction("Index", "Home");
         }
 
 
@@ -86,6 +86,23 @@ namespace MedikoWeb.Controllers
             return View();
         }
 
+
+        public async Task<IActionResult> Demo()
+        {
+            var foundUser = await _userManager.FindByNameAsync("Demo");
+            if (foundUser == null)
+            {
+
+                return RedirectToAction(nameof(Login));
+            }
+
+
+            var result = await _signinManager
+                        .PasswordSignInAsync(foundUser, "Demo2022#", false, false);
+
+            if (result.Succeeded) return RedirectToAction(nameof(Dashboard));
+            return RedirectToAction(nameof(Login));
+        }
 
 
         [Route("Logout")]

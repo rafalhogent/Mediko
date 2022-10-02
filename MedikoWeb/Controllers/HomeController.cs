@@ -15,8 +15,10 @@ namespace MedikoWeb.Controllers
 
         public IActionResult Index()
         {
-            //return View();
-            return RedirectToAction("Index", "User");
+            if (User.Identity?.IsAuthenticated == true)
+                return RedirectToAction("Dashboard", "User");
+            return View();
+            //return RedirectToAction("Index", "User");
         }
 
         public IActionResult Info()
