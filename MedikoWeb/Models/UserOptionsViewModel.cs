@@ -8,6 +8,8 @@
         public List<LogbookSelection> LogbookSelections { get; set; } = new List<LogbookSelection>();
 
         public string? Message { get; set; }
+
+        public bool PasswordEditingAllowed { get; set; } = true;
     }
 
     public class LogbookSelection

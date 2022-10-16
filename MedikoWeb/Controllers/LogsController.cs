@@ -48,7 +48,6 @@ namespace MedikoWeb.Controllers
             var logbook = _logbookService.GetLogBookById(logbookId).Result;
             if (logbook == null) RedirectToAction("Index", "Home");
 
-            //diaryVM.Message = string.IsNullOrWhiteSpace(_message) ? _message : null;
             diaryVM.Message = !string.IsNullOrWhiteSpace(_message) ? _message + "" : null;
             _message = null;
             diaryVM.Logbook = _logbookService.GetLogBookById(logbookId).Result;
@@ -57,8 +56,6 @@ namespace MedikoWeb.Controllers
             diaryVM.NewLog = new LogViewModel();
 
             diaryVM.NewLog.LogbookId = logbookId;
-            //diaryVM.NewLog.Date = DateOnly.FromDateTime(DateTime.Now);
-            //diaryVM.NewLog.Time = TimeOnly.FromDateTime(DateTime.Now);
             diaryVM.NewLog.DateAndTime = DateTime.Now;
 
             var userLogs = await _logsService.GetUserLogsByLogbookIdAsync(currentUser.Id, logbookId);
@@ -73,14 +70,14 @@ namespace MedikoWeb.Controllers
             var logBook = await _logbookService.GetLogBookById(diaryVM.NewLog.LogbookId);
             if (logBook == null)
             {
-                ErrorViewModel error = new ErrorViewModel { Message = "Logbook not found" } ;
+                ErrorViewModel error = new ErrorViewModel { Message = "Logboek niet gevonden" } ;
                 return View("Error", error);
             }
 
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                ErrorViewModel error = new ErrorViewModel { Message = "AppUser not found" };
+                ErrorViewModel error = new ErrorViewModel { Message = "Gebruiker niet gevonden" };
                 return View("Error", error);
             }
 
@@ -104,7 +101,7 @@ namespace MedikoWeb.Controllers
                                          newLog.Comment);
             if (result == false)
             {
-                ErrorViewModel error = new ErrorViewModel { Message = "Adding log failed" };
+                ErrorViewModel error = new ErrorViewModel { Message = "Het toevoegen van gebruiker is mislukt" };
                 return View("Error", error);
             }
 
@@ -118,11 +115,11 @@ namespace MedikoWeb.Controllers
             if (log != null)
             {
                 var result = await _logsService.RemoveLogAsync(log);
-                if (result) _message = $"Log with id : {logid} removed";
-                else _message = $"Verwijderen Log with id : {logid} failed";
+                if (result) _message = $"Log met id : {logid} verwijderd";
+                else _message = $"Verwijderen Log met id : {logid} mislukt";
                 return RedirectToAction(nameof(Diary), new {logbookId = log.LogBook.LogBookId});
             }
-            _message = $"Log with id : {logid} not found";
+            _message = $"Log met id : {logid} niet gevonden";
             return RedirectToAction(nameof(Diary), new { logbookId = 1 });
             //return RedirectToAction(nameof(Index));
 
@@ -133,7 +130,7 @@ namespace MedikoWeb.Controllers
         {
             if(diaryVM.NewLog.logId == null || diaryVM.NewLog.logId == 0)
             {
-                _message = $"Log 0 not found";
+                _message = $"Log 0 nniet gevonden";
                 return RedirectToAction(nameof(Diary), new { logbookId = diaryVM.NewLog.LogbookId});
             }
             var logToUpdate = await _logsService.GetLogByIdAsync(diaryVM.NewLog.logId.Value);
@@ -145,11 +142,11 @@ namespace MedikoWeb.Controllers
                 logToUpdate.Value3 = diaryVM.NewLog.Value3;
                 logToUpdate.Comment = diaryVM.NewLog.Comment;
 
-                if (await _logsService.UpdateLogAsync(logToUpdate)) _message = $"Log {logToUpdate.LogId} succesful updated";
+                if (await _logsService.UpdateLogAsync(logToUpdate)) _message = $"Log {logToUpdate.LogId} gewijzigd";
                 else _message = $"Log {logToUpdate.LogId} update failed";
                 return RedirectToAction(nameof(Diary), new { logbookId = diaryVM.NewLog.LogbookId});
             }
-            _message = $"Log with id : {diaryVM.NewLog.logId} not found";
+            _message = $"Log met id : {diaryVM.NewLog.logId} niet gevonden";
             return RedirectToAction(nameof(Index));
         }
     }

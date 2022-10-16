@@ -2,10 +2,15 @@
 
 <h2 class="mt-3 mx-3 mb-2">
     <b>@Model.UserName</b>
+    @{
+        if (Model.PasswordEditingAllowed)
+        {
+            <a class="btn btn-sm btn-primary ms-2 mb-1" asp-action="ChangePassword" asp-controller="User">
+            <i class="bi bi-lock-fill icon"></i>Wachtwoord wijzigen
+            </a>
+        }
+    }
 
-    <a class="btn btn-sm btn-primary ms-2 mb-1" asp-action="ChangePassword" asp-controller="User">
-        <i class="bi bi-lock-fill icon"></i>Wachtwoord wijzigen
-    </a>
 </h2>
 <h6 class="mx-3"><i>@Model.UserId</i></h6>
 

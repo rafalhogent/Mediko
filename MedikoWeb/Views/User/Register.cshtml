@@ -8,13 +8,13 @@
 <div class="row align-items-center g-lg-5 py-1 py-lg-5 mx-2 mb-5 respo">
 
     <div class=" col-3 mx-auto col-lg-5">
-        <img src="../images/dotnetbot2.png" class="d-none d-lg-block mx-lg-auto img-fluid" alt="dotnetbot"
+        <img src="../images/dotnetbot2.webp" class="d-none d-lg-block mx-lg-auto img-fluid" alt="dotnetbot"
              width="400" height="400" loading="lazy">
     </div>
 
     <div class="col-md-10 mx-auto col-lg-6 col-xl-7 col-xxl-7mb-3">
         <p class="text-center my-3">
-            <img src="../images/dotnetbot2.png" class="d-inline-block d-lg-none img-fluid" alt="dotnetbot"
+            <img src="../images/dotnetbot2.webp" class="d-inline-block d-lg-none img-fluid" alt="dotnetbot"
                  width="80" height="80">
             <span class="ms-3 fs-4 d-inline-block my-2">Registreer in Mediko</span>
         </p>
@@ -31,6 +31,8 @@
                     <label for="floatingPassword">Wachtwoord</label>
                 </div>
                 @Html.ValidationMessage("UserExists", new{@class="text-danger"})
+                @Html.ValidationMessage("RegFailed", new{@class="text-danger"})
+                @Html.ValidationMessage("BadName", new{@class="text-danger"})
                 <span asp-validation-for="UserName" class="d-block text-danger"></span>
                 <span asp-validation-for="Password" class="d-block text-danger"></span>
                 @*<div asp-validation-summary="All"></div>*@
@@ -41,8 +43,8 @@
                 @*<a asp-action="Register" class="btn btn-secondary ms-2">Registreren</a>*@
             </div>
             <hr class="my-4">
-            <small class="text-muted">De wachtwoord moet minimum 8-tekens bevaten, een klein letter, 
-            een groot letter, een speciale teken !#$%^&*().</small>
+            <small class="text-muted">Gebruikersnaam: geen spaties, enkel letters en cijfers, min 3, max 50 tekens.</small>
+            <small class="text-muted">Wachtwoord: minimum 6-tekens, een cijfer verplicht.</small>
 
         </form>
     </div>

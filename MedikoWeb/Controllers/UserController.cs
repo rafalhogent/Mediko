@@ -138,6 +138,12 @@ namespace MedikoWeb.Controllers
                     ModelState.AddModelError("UserExists", "Gebruikersnaam al bestaat, kies andere naam");
                     return View();
                 }
+                if (user.UserName.Contains(' '))
+                {
+                    ModelState.AddModelError("BadName", 
+                        $"Gebruikersnaam niet correct. Probeer {userVM.UserName.Trim().Replace(' ', '_')}");
+                    return View();
+                }
                 var result = await _userManager.CreateAsync(user, userVM.Password);
 
                 if (result.Succeeded)
@@ -161,6 +167,12 @@ namespace MedikoWeb.Controllers
                     await _signinManager.SignInAsync(nieuwUser, isPersistent: false);
 
                     return RedirectToAction(nameof(Index), "Home");
+                }
+                else
+                {
+                    //userVM.UserName = userVM.UserName.Trim().Replace(' ', '_');
+                    ModelState.AddModelError("RegFailed", "Registartie mislukt, controleer gegevens");
+                    return View("Register", userVM);
                 }
 
             }
@@ -197,8 +209,8 @@ namespace MedikoWeb.Controllers
                 UserId = user.Id,
                 UserName = user.UserName,
                 Message = _message,
-                LogbookSelections = logbooksSelections
-
+                LogbookSelections = logbooksSelections,
+                PasswordEditingAllowed = user.UserName == "Demo" ? false : true                
             };
             return View(optionsVM);
         }

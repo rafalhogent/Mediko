@@ -21,6 +21,12 @@ builder.Services.AddTransient<ILogsRepo, SQLLogsRepo>();
 builder.Services.AddIdentity<AppUser, IdentityRole>(config =>
 {
     config.SignIn.RequireConfirmedEmail = false;
+    config.Password.RequiredUniqueChars = 0;
+    config.Password.RequiredLength = 6;
+    config.Password.RequireNonAlphanumeric = false;
+    config.Password.RequireLowercase = false;
+    config.Password.RequireUppercase = false;
+    config.Password.RequireDigit = true;
 })
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<MedikoDbContext>()
@@ -37,7 +43,8 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    // The default HSTS value is 30 days. You may want to change this for production scenarios,
+    // see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 app.UseStatusCodePages();
